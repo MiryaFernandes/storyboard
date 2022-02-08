@@ -1,5 +1,9 @@
 :root{
 
+    --cor-fundo: #1F2024;
+    --cor-hover: #4B4952;
+    --cor-primaria: #A68F97;
+
 
 }
 
@@ -9,3 +13,53 @@
     padding: 0;
 
 }
+
+.dp-menu ul {
+    background-color: var(--cor-fundo);
+    border: none;
+}
+
+.dp-menu ul li{
+
+    display: inline;
+    position: relative;
+}
+
+.dp-menu ul li a{
+
+    color: var(--cor-primaria);
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+    transition: background .2s;
+}
+
+.dp-menu ul li a:hover{
+
+    background-color: var(--cor-hover);
+   
+}
+
+/*sub menu*/
+.dp-menu ul ul{
+    display: none;
+    left: 0;
+    position: absolute;
+}
+
+.dp-menu ul li:hover ul{
+    display: block;
+    
+}
+
+.dp-menu ul ul{
+
+    width: 150px;
+}
+
+.dp-menu ul ul li a{
+    display: block;
+}
+
+
+
