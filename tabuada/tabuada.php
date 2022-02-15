@@ -4,53 +4,71 @@
 $multiplicador =(int) 0;
 $mutiplicando =(int) 0;
 
+
 if(isset($_POST['btnCalc'])){
 
 $multiplicando = $_POST['txtn2'];
 $multiplicador = $_POST['txtn1'];
-$opcao = strtoupper($_POST['rdoCalc']);
+$valor = $_POST['resultado'];
+$limpar = $_POST['limpar'];
 
-if($_POST['txtn1'] == "" || $_POST['txtn2' == ""])
+if($_POST['txtn1'] == "" || $_POST['txtn2'] == "")
 
-    echo ('<script> alert("favor preencer todas as caixas")</script>');
+   echo('<script> alert ("verificar se todas as lacunas foram preenchidas!"); </script>');
 
-else {
+else 
+{  
+    if(!is_numeric($multiplicando) || !is_numeric($multiplicador)) 
 
-    if(!is_numeric($multiplicador) || !is_numeric($multiplicando))
-    
-        echo ('<script> alert("não é possivel realizar calculos com dados não numericos")</script>');
-    
+       echo('<script> alert("nao é possivel realizar calculos com dados não numericos")</script>');
+
     else {
+        
+        $contador = 0;
 
-        $resultado = $multiplicando * $multiplicador;
-    }    
+        while($contador <= 10):
+    
+           $valor = $multiplicador * $multiplicando;
+    
+           $contador++;
+         
+        endwhile;  
+    
+    
+    }   
+
+}
+
 }
 
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>tabuada</title>
 </head>
 <body>
-    <div id="conteudo">
-        <div id="titulo"> 
-            tabuada simples <br><br>
-        </div>
-        <form name="frmTabuada" method="post" action="tabuada.php">
-            tabuada: <input type="text" name="txtn1" value=""><br><br>
-            contador: <input type="text" name="txtn2" value=""><br><br>
-
-            <input type="submit" name="btnCalc" value="calcular">
-
-            <div id="resultado">
-                
+    <section>
+        <div id="conteudo">
+            <div id="titulo"> 
+                tabuada simples <br><br>
             </div>
-        </form>
+            <form name="frmTabuada" method="post" action="tabuada.php">
+                tabuada: <input type="text" name="txtn1" value=""><br><br>
+                contador: <input type="text" name="txtn2" value=""><br><br>
 
-    </div>    
+                <input type="submit" name="btnCalc" value="calcular">
+                <input type="submit" name="btnRst" value="limpar">
+
+                <div id="resultado">
+                    <?php echo($valor);?>
+                </div>
+            </form>
+        </div>  
+    </section>  
 </body>
 </html>
