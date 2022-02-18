@@ -1,183 +1,133 @@
 <?php
 
-//declaraçao de variveis
-
-$valor1 =(double) 0;
-$valor2 =(double) 0;
-$resultado =(double) 0;
-$opcao =(string) null;
-
-/*
-
-    gettype() -> permite verificar qual o tipo de dados de uma variavel
-    settype() -> permite modificar p tipo de dados de uma variavel 
-
-*/
-
-/*
-    exemplo de uma variavel que nasce do tipo inteiro e depois é
-    convertida para string
-
-    $nome = 10;
-
-    echo(gettype($nome));
-
-    settype($nome, "string");
-
-    echo(gettype($nome));
-
-    strtoupper() -> permite converter um texto para maiusculo
-    strtolower() -> permite converter um texto para maiusculo
-
-*/
-//validaçao pra verificar se o botao foi clicado
-
-if(isset($_POST['btnCalc'])){
-
-    //recebe os dados do formulario
-    $valor1 = $_POST['txtn1'];
-    $valor2 = $_POST['txtn2'];
-    $opcao = strtoupper($_POST['rdoCalc']);
-
-
-
-    if($_POST['txtn1'] == "" || $_POST['txtn2'] == "")
-
-       echo('<script> alert("favor preencer todas as caixas");</script>');
-    else 
-    {
-
-
-            if(!isset($_POST['rdoCalc']))
-
-                echo('<script> alert("favor escolher uma operaçao valida");</script>');
-
-            else
-            {
-
-                //validaçao de tratamento para a entrada de string ao inves de numeros
-                if(!is_numeric($valor1) || !is_numeric($valor2))
-
-                    echo('<script> alert("nao é possivel realizar calculos com dados não numericos")</script>');
-
-                    else 
-                    {
-
-                        $opcao = strtoupper($_POST['rdoCalc']);
-                        
- 
-                        switch($opcao)
-                        {
-
-                            case("SOMAR"):
-
-                                $resultado = $valor1 + $valor2;
-
-                            break;
-
-                            case("SUBTRAIR"):
-                                
-                                $resultado = $valor1 - $valor2;
-
-                            break;
-
-                            case("MULTIPLICAR"):
-
-                                $resultado = $valor1 * $valor2;
-
-                            break;
-                                
-                            case("DIVIDIR"):   
-                                
-                                if($valor2 == 0)
-
-                                    echo('<script> alert ("nao é possivel realizar uma divisao onde o valor 2 seja igual a zero")</script>');
-
-                                else
-
-                                $resultado = $valor1 / $valor2;
-
-                            break;
-                                    
-                        }
-                        
-
-                        //processamento do calculo das operaçoes
-                        /*if($opcao == 'SOMAR') 
-
-                            $resultado = $valor1 + $valor2;
-
-                        else if ($opcao == 'SUBTRAIR')
-
-                            $resultado = $valor1 - $valor2;
-
-                        else if ($opcao == 'MULTIPLICAR')
-
-                            $resultado = $valor1 * $valor2;
-
-                        else if ($opcao == 'DIVIDIR')
-
-                        {
-                            if($valor2 == 0)
-
-                                echo('<script> alert("nao é possivel realizar uma divisao onde o valor 2 seja igual a zero");</script>');
-                             
-                            else
-                            
-                                 $resultado = $valor1 / $valor2;
-                        }*/
-
-                            //round() -> permite ajustar a quantidade de casas decimais realizando o arredondamento
-                            //$resultado = round($resultado, 5);
-                            //4resultado_format -> permite ajustar a quantiade de casa decimais realizando o arredondamento
-                
-                    }
-
-            }
+    //Podemos importar um arquivo com : include, include_once, require, require_once
+    require_once('functions/variaveis.php');
+    require_once('functions/calculos.php');
+    require_once('functions/constantes.php');     
     
 
-    }
+    if(isset($_POST["btnCalcular"]))        //validação para verificar se o botão calcular foi acionado 
+    {
+                //usar = "" ou empty para tratar caixas vazias
+        if($_POST["txtValor1"] == "" || ($_POST["txtValor2"] ==""))
+            echo(ERRO_CAIXA_VAZIA);
+            else{
+                    //Resgatando valores do formulário no html
+                    $valor1 = $_POST["txtValor1"];
+                    $valor2 = $_POST["txtValor2"];
+                                            //Resgata os valores do radio e converte a escrita
+                    if(isset($_POST['conta'])) //Validação para radio vazia
+                    {
+                        $operacao = strtoupper($_POST["conta"]);
 
-}
-
+                        if(is_numeric($valor1) && is_numeric($valor2)) //validação para verificar se os dados são numeros
+                        {
+                            //Chamada da função calcular, enviando os argumentos de valores e operação
+                            $resultado = calcular($valor1, $valor2, $operacao);
+                        }                  
+                        else
+                        {
+                            echo(ERRO_DADOS_NAO_NUMERICOS);
+                       }    
+                    }
+                    else
+                    {
+                      echo(ERRO_CAIXA_VAZIA);  
+                    }                           //Validação para radio vazia
+                }                               //validação para caixa vazia
+    }                                           //validação para verificar se o botão calcular foi acionado    
+          
 ?>
 
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Calculadora - Simples</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-	<body>
-        
-        <div id="conteudo">
-            <div id="titulo">
-                Calculadora Simples
-            </div>
 
-            <div id="form" >
-                <form name="frmcalculadora" method="post" action="calculadora_simples.php">
-						Valor 1:<input type="text" name="txtn1" value="<?=$valor1;?>" > <br>
-						Valor 2:<input type="text" name="txtn2" value="<?=$valor2;?>" > <br>
-						<div id="container_opcoes">
-							<input type="radio" name="rdoCalc" value="somar" <?=$opcao == 'SOMAR' ? 'checked' : null; ?> > Somar <br>
-                            <input type="radio" name="rdoCalc" value="subtrair" <?=$opcao == 'SUBTRAIR' ? 'checked' : null; ?> > Subtrair <br>
-                            <input type="radio" name="rdoCalc" value="multiplicar" <?=$opcao == 'MULTIPLICAR' ? 'checked' : null; ?> >Multiplicar <br>
-							<input type="radio" name="rdoCalc" value="dividir" <?=$opcao == 'DIVIDIR' ? 'checked' : null; ?> >Dividir <br>
-							
-							<input type="submit" name="btnCalc" value ="Calcular" >
-							
-						</div>	
-						<div id="resultado">
-						 <?=$resultado;?>
-						</div>
-						
-					</form>
-            </div>
-           
+<head>
+    <meta charset="UTF-8">
+    <title>calculo de Médias</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div id="divHeader">
+        menu
+    </div>
+    <div id="divMenu">
+        <div id="divSubMenu">
+            <ul id="ulSubMenu">
+                <li class="liSubMenu">calculadora</li>
+                <li class="liSubMenu">tabuada</li>
+                <li class="liSubMenu">pares e impares</li>
+                <li class="liSubMenu">média</li>
+            </ul>
         </div>
-        
-		
-	</body>
+    </div>
+    <div id="alinhamentoCalculadora">
+        <div id="estrutura">
+            <!--Div Estrutura-->
+            <div id="divtextoCalculadora">calculadora simples</div>
+            <div id="conteudo">
+                <div id="divFormulario">
+                    <form name="frmCalculadora" method="post" action="">
+                        <div class="caixatxt">
+                            <label>valor 1</label>
+                            <input type="text" name="txtValor1" value="<?=$valor1?>">
+                        </div>
+                        <div class="caixatxt">
+                            <label>valor 2</label>
+                            <input type="text" name="txtValor2" value="<?=$valor2?>">
+                        </div>
+                        <div id="parteinferior">
+                            <div id="selecao">
+                                <!--Bolinhas e Botão-->
+                                <div class="bolinhas">
+                                    <input type="radio" name="conta" value="soma" <?php
+                                            if($operacao == "SOMA")
+                                            {
+                                                echo("checked");
+                                            }
+                                        ?>> somar
+                                </div>
+                                <div class="bolinhas">
+                                    <input type="radio" name="conta" value="subtracao" <?php
+                                            if($operacao == "SUBTRACAO")
+                                            {
+                                                echo("checked");
+                                            }
+                                            
+                                        ?>> subtrair
+                                </div>
+                                <div class="bolinhas">
+                                    <input type="radio" name="conta" value="multiplicacao" <?php
+                                            if($operacao == "MULTIPLICACAO")
+                                            {
+                                                echo("checked");
+                                            }
+                                        ?>> multiplicar
+                                </div>
+                                <div class="bolinhas">
+                                    <input type="radio" name="conta" value="divisao" <?php 
+                                            if($operacao == "DIVISAO")
+                                            {
+                                                echo("checked");
+                                            }
+                                        ?>> dividir
+                                </div>
+                                <input type="submit" value="calcular" name="btnCalcular" id="botao">
+                            </div>
+                            <div id="resultado">
+                                <!--Resultado--><?=(round($resultado, 4)); ?>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <div id="voltarTopo">
+        <a href="#divHeader">topo</a>
+    </div>
 
 </html>
-

@@ -1,30 +1,27 @@
-<?php
-
-?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>projeto php</title>
-    <link rel="stylesheet" href="./css/style.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 <body>
-    <nav class="dp-menu">
-        <ul>
-            <li><a href="#"> home </a></li>
-                <li><a href="#"> projetos </a>
-                    <ul>
-                        <li><a href="./media/media.php"> media </a></li>
-                        <li><a href="./calculadora/calculadora.php"> calculadora </a></li>
-                        <li><a href="./tabuada/tabuada.php"> tabuada </a></li>
-                        <li><a href="./par-impar/par-impar.php"> pares e impares </a></li>
-                    </ul>
-                </li>
-            <li><a href="./projetos/quemsou.php"> quem somos</a></li>
-        </ul>
-    </nav>    
-   <p><img src="./img/pop-cat.gif" alt=""></p>
+	<nav>
+		<input type="checkbox" id="check">
+		<label for="check" class="checkbtn">
+			<i class="fas fa-bars"></i>
+		</label>
+		<label class="logo">projeto php</label>
+		<ul>
+			<li><a class="active" href="#">inicio</a></li>
+			<li><a href="./tabuada/tabuada.php">tabuada</a></li>
+			<li><a href="./calculadora/calculadora.php">calculadora</a></li>
+			<li><a href="./par-impar/par-impar.php">par-impar</a></li>
+            <li><a href="./media/media.php">media</a></li>
+		</ul>
+	</nav>
+	<section>
+	</section>
+
 </body>
 </html>

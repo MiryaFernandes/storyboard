@@ -1,125 +1,93 @@
 <?php
-//declaração de variaveis 
-    //nomeVar = (tipoDados) valor inicial;
-    $nota1 = (double) 0;
-    $nota2 = (double) 0;
-    $nota3 = (double) 0;
-    $nota4 = (double) 0;
-    $media = (double) 0;
 
-    //Validação para tratar se o botão foi clicado
-    if(isset($_POST['btncalc'])){
+    $media= null;
+    $nota1= null;
+    $nota2= null;
+    $nota3= null;
+    $nota4= null;
+    if(isset($_POST["btnCalcular"]))
+    {
+        $nota1 = $_POST["txtN1"];
+        $nota2 = $_POST["txtN2"];
+        $nota3 = $_POST["txtN3"];
+        $nota4 = $_POST["txtN4"];
 
-        //operadores logicos
-        // OU - or, ||
-        //E - and, &&
-        //NEGAÇAO - ! 
-        
-            //recebendo dados utilizados o POST do formulário
-            $nota1 = $_POST['txtn1'];
-            $nota2 = $_POST['txtn2'];
-            $nota3 = $_POST['txtn3'];
-            $nota4 = $_POST['txtn4'];
-
-
-        /*
-        
-          is_numeric() - permite validar se o conteudo é um numero
-          is_string() - permite validar se o conteudo é uma string
-          is_integer() - permite validar se o conteudo é inteiro
-          is_double() ou is_float() - permite validar se o conteudo é um valor real
-          is_array() - permite validar se o conteudo é um vetor ou uma matriz
-          is_bool() - permite validar se o conteudo é booleano
-
-          ...
-        
-        */
-
- 
-        
-        //tratamento de erro para validaçao de   caixa vazia
-        if($_POST['txtn1'] == "" || $_POST['txtn2'] == "" || $_POST['txtn3'] == "" || $_POST['txtn4'] == ""){
-
-            echo('<p class ="msgErro"> verificar se todas as notas foram preenchidas! </p>');
-        } 
-        
-        else {
-
-            if(!is_numeric($nota1) || !is_numeric($nota2) || !is_numeric($nota3) || !is_numeric($nota4)) {
+        if( $nota1 == "" || $nota2 == "" || $nota3 == "" || $nota4 == "")
+        {
+            echo("<script> alert('Preencha todas as caixas'); </script>");
+        }
+        else
+        {
+            if(is_numeric($nota1) && is_numeric($nota2) && is_numeric($nota3) && is_numeric($nota4))
+            $media = ( $nota1 + $nota2 + $nota3 + $nota4 ) / 4 ;
+            else
+            {
+                echo("<script> alert('Não é possivel calcular com dados não numéricos');</script>");
+            }    
             
-           
-                echo('<p class ="msgErro"> todos os valores digitados devem ser numeros validos! </p>');
+        }
 
-
-            } 
-
-            else{
-
-                 //realizando o cálculo da média
-                $media = ($nota1 + $nota2 + $nota3 + $nota4) / 4;
-                
-            }
-
-    
     }
-
-}
-
 
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <title>Média</title>
-       <link rel="stylesheet" type="text/css" href="css/style.css">
-        <meta charset="utf-8">
-    </head>
-	<body>
-        
-        <div id="conteudo">
-            <header id="titulo">
-                Calculo de Médias
-            </header>
-
-            <div id="form">
-                <form name="frmMedia" method="post" action="media.php">
-                    <div>
-                        <label>Nota 1:</label>
-                        <input type="text" name="txtn1" value="<?php echo($nota1) ?>"  > 
-                    </div>
-                    
-                    <div>
-                        <label>Nota 2:</label>
-                        <input type="text" name="txtn2" value="<?php echo($nota2) ?>" > 
-                    </div>
-                    
-                    <div>
-                        <label>Nota 3:</label>
-                        <input type="text" name="txtn3" value="<?php echo($nota3) ?>" > 
-                    </div>
-                    
-                    <div>
-                        <label>Nota 4:</label>
-                        <input type="text" name="txtn4" value="<?php echo($nota4) ?>" >
-                    </div>
-                    <div>
-                        <input type="submit" name="btncalc" value ="Calcular" >
-                        <div id="botaoReset">
-                            <a href="media.php">
-                                Novo Cálculo
-                            </a>    
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-            <footer id="resultado">
-                A média é: <?php echo($media); ?>
-            </footer>
+<head>
+    <meta charset="UTF-8">
+    <title>Calculo de Médias</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="divHeader">
+        Matemática
+    </div>
+    <div id="divMenu">
+        <div id="divSubMenu">
+            <ul id="ulSubMenu">
+                <li class="liSubMenu">calculadora</li>
+                <li class="liSubMenu">média</li>
+                <li class="liSubMenu">pares e ímpares</li>
+                <li class="liSubMenu">tabuada</li>
+            </ul>
         </div>
-        
-		
-	</body>
-
+    </div>
+    <div id="fundo">
+        <div id="estrutura">
+            <div id="cabecalio">
+                <header class="fonte">calculo de médias</header>
+            </div>
+            <form id="form" name="frmMedia" method="post" action="">
+                <div class="espacamento">
+                    <label>nota 1:</label>
+                    <input type="text" name="txtN1" value="<?=$nota1?>" >
+                </div>
+                <div class="espacamento">
+                    <label>nota 2:</label>
+                    <input type="text" name="txtN2" value="<?=$nota2?>" >
+                </div>
+                <div class="espacamento">
+                    <label>nota 3:</label>
+                    <input type="text" name="txtN3" value="<?=$nota3?>" >
+                </div>
+                <div class="espacamento">
+                    <label>nota 4:</label>
+                    <input type="text" name="txtN4" value="<?=$nota4?>" >
+                </div>
+                <div class="espacamento">
+                    <input type="submit" value="calcular" name="btnCalcular">
+                    <div id="botaoreset"><a href="calculadora.php">Novo Cálculo</a></div>
+                </div>
+            </form>
+            <div id="media">
+                <span class="fonte">a média é: <?php echo($media); ?> </span> 
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div id="voltarTopo">
+            <a href="#divHeader">topo</a>
+        </div>
+    </footer>
+</body>
 </html>
